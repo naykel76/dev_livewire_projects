@@ -3,15 +3,7 @@
 # Demo Site for Laravel and Livewire Development and Testing
 
 - [Initial Set up](#initial-set-up)
-- [WithDataTable Trait](#withdatatable-trait)
-    - [Search Functions](#search-functions)
-    - [Sort Functions](#sort-functions)
-- [WithCrud Trait](#withcrud-trait)
-    - [Remember form values on escape](#remember-form-values-on-escape)
-    - [`makeBlankModel()`](#makeblankmodel)
-- [File Uploads](#file-uploads)
-- [Gotime search-sort toolbar component](#gotime-search-sort-toolbar-component)
-        - [Trouble Shooting](#trouble-shooting)
+- [Create Data Table with Search and Sort](#create-data-table-with-search-and-sort)
 
 ## Initial Set up
 
@@ -23,3 +15,21 @@
 - [x] Add additional database fields to migration(s)
 - [x] Create `projects` disk in `filesystems.php` for image storage
 - [x] Create livewire `ProjectTable` component, and view
+
+
+## Create Data Table with Search and Sort
+
+- [x] Add search macro to `AppServiceProvider`
+- [x] Create `WithDataTable` trait for pagination, search, and sort functions
+- [x] Create data table with Gotime table and toolbar components
+
+###### Search Macro
+
+```php
+use Illuminate\Database\Eloquent\Builder;
+
+Builder::macro('search', function ($field, $string) {
+    return $string ? $this->where($field, 'like', '%' . $string . '%') : $this;
+});
+```
+
