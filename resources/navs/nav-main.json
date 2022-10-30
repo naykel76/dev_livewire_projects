@@ -2,9 +2,14 @@
   "main": {
     "links": [
       {
-        "title": "Home",
+        "title": "Projects Table",
         "route_name": "home",
         "icon": "home",
+        "exclude_route": true
+      },
+      {
+        "title": "Projects",
+        "route_name": "projects.index",
         "exclude_route": true
       }
     ]

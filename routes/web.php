@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Naykel\Gotime\Facades\RouteBuilder;
 
@@ -14,17 +15,8 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
+Route::resource('projects', ProjectController::class)->only('index', 'show');
+
 RouteBuilder::create('nav-main');
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-|
-*/
 
-// RouteBuilder::create('nav-admin');
-
-// Route::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {
-//     Route::view('/', '/admin.dashboard')->name('');
-// });

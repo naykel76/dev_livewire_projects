@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'projects' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/projects'),
+            'url' => env('APP_URL') . '/storage/projects',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*
