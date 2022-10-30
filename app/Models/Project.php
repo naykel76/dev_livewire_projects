@@ -26,7 +26,7 @@ class Project extends Model
             : url('/svg/placeholder.svg');
     }
 
-    public function additionalImages()
+    public function tmpGallery()
     {
         return $this->hasMany(AdditionalImage::class);
     }

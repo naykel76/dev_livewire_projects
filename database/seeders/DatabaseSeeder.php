@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'naykel-400-001.png',
             'published_at' => Carbon::createFromDate(2022, 5, 9),
             'project_value' => '1980000',
-        ])->additionalImages()
+        ])->tmpGallery()
             ->createMany([
                 [
                     'image' => 'naykel-400-002.png',
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'naykel-400-001.png',
             'published_at' => Carbon::createFromDate(2022, 5, 9),
             'project_value' => '12000000',
-        ])->additionalImages()
+        ])->tmpGallery()
             ->createMany([
                 [
                     'image' => 'naykel-400-002.png',

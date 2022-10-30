@@ -4,6 +4,8 @@
 
 - [Initial Set up](#initial-set-up)
 - [Create Data Table with Search and Sort](#create-data-table-with-search-and-sort)
+- [Add CRUD functions](#add-crud-functions)
+    - [Remember form values on escape](#remember-form-values-on-escape)
 
 ## Initial Set up
 
@@ -25,6 +27,9 @@
 
 ###### Search Macro
 
+Add search macro to `boot()` method of the `AppServiceProvider`.
+
+
 ```php
 use Illuminate\Database\Eloquent\Builder;
 
@@ -33,3 +38,30 @@ Builder::macro('search', function ($field, $string) {
 });
 ```
 
+## Add CRUD functions
+
+- [x] Create `WithCrud` trait
+- [x] CRUD functions `edit`, `create`, `save`, `delete`
+    - [x] `makeBlankModel()` to initialize blank model with default values
+    - [x] `handleImage()` for main project image
+- [x] Create/Edit form in modal
+
+
+### Remember form values on escape
+
+Offers protection if accidentally escape and close form before saving.
+
+Save Method - Works by checking if the if `$editing` model has a primary key,
+if there is a primary key then it is safe to assume it is a record from the
+database so don't reset the fields (leave them with the escaped values)
+
+```php
+if ($this->editing->getKey()) $this->editing = $this->makeBlankModel();
+```
+
+Edit Method - uses helper to compare the `$editing` model is not equal to the
+`$selected` model passed in. If not equal override, otherwise leave it alone.
+
+```php
+if ($this->editing->isNot($selected)) $this->editing = $selected;
+```

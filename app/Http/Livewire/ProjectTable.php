@@ -2,39 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithCrud;
 use App\Http\Livewire\Traits\WithDataTable;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Project;
 
+
 class ProjectTable extends Component
 {
 
-    use WithPagination, WithDataTable;
+    use WithPagination, WithDataTable, WithCrud;
 
-    /**
-     * Default search field
-     * @var string
-     */
     public string $searchField = 'title';
-
-    /**
-     * Available search fields
-     * @var array
-     */
     public array $searchOptions = ['title', 'status'];
-
-    /**
-     * Default value for pagination results
-     * @var int
-     */
     public int $perPage = 10;
-
-    /**
-     * Pagination value options
-     * @var array
-     */
     public array $paginateOptions = [10, 25, 50, 100];
+    public bool $showModal;
+    public $tmpImage;
 
     /**
      * Primary resource model class
@@ -42,6 +27,41 @@ class ProjectTable extends Component
      */
     private static $model = Project::class;
 
+    /**
+     * Default values for blank model
+     * @var string[]
+     */
+    protected $initialData = ['status' => 'draft'];
+
+    /**
+     * Blank model if 'create', or selected model from database if 'edit'
+     * @var Project
+     */
+    public Project $editing;
+
+    /**
+     * Storage disk for images
+     * @var string
+     */
+    protected string $disk = 'projects';
+
+    public function rules()
+    {
+        return [
+            'editing.id' => 'sometimes', // required for data binding
+            'editing.title' => 'required|max:256',
+            'editing.status' => 'sometimes|in:' . collect(Project::STATUS)->keys()->implode(','),
+            'editing.sort_order' => 'nullable|integer',
+            'editing.project_value' => 'nullable|numeric',
+            'editing.description' => 'sometimes',
+            'editing.client' => 'sometimes',
+            'editing.location' => 'sometimes',
+            'editing.date_started' => 'sometimes',
+            'editing.date_completed' => 'sometimes',
+            'editing.published_at' => 'sometimes',
+            'tmpImage' => 'nullable|image',
+        ];
+    }
 
     public function render()
     {
