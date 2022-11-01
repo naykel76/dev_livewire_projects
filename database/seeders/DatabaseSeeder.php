@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
         \App\Models\Project::create([
             'title' => 'Test Project',
             'description' => '<div>This is the project description</div><ul><li>Clearing and Grubbing, Topsoil Stripping and Foundation Treatment</li><li>Drill and Blast, including blasting the trench alignment</li></ul>',
-            'status' => 'published',
+            'status' => 'draft',
             'image' => 'naykel-400-001.png',
-            'published_at' => Carbon::createFromDate(2022, 5, 9),
+            'published_at' => null,
             'project_value' => '1980000',
-        ])->tmpGallery()
+        ])->additionalImages()
             ->createMany([
                 [
                     'image' => 'naykel-400-002.png',
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'naykel-400-001.png',
             'published_at' => Carbon::createFromDate(2022, 5, 9),
             'project_value' => '12000000',
-        ])->tmpGallery()
+        ])->additionalImages()
             ->createMany([
                 [
                     'image' => 'naykel-400-002.png',

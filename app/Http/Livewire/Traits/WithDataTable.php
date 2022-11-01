@@ -4,9 +4,7 @@ namespace App\Http\Livewire\Traits;
 
 trait WithDataTable
 {
-
     public string $search = '';
-
     public $sortField = 'id'; // default field
     public $sortDirection = "asc";
 

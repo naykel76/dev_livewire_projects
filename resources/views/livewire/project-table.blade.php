@@ -1,5 +1,6 @@
 <div>
-    <x-gt-modal wire:model="showModal" maxWidth="xl">
+    {{ $this->editing }}
+    {{-- <x-gt-modal wire:model="showModal" maxWidth="xl"> --}}
 
         <div class="flex space-between va-c">
             <div class="bx-title">Edit/Add Project</div>
@@ -33,6 +34,20 @@
                         </div>
                     </div>
                     <hr>
+                    {{-- additional images --}}
+                    <div class="grid cols-20:80 gg-3">
+                        <div>
+                            <div class="bx-title">Additional Images</div>
+                        </div>
+                        <div>
+                            <x-gt-filepond wire:model="tmpAdditionalImages" multiple />
+                            <div class="grid cols-4-2-2">
+                                @foreach($this->editing->additionalImages as $image)
+                                    <img src="/storage/projects/{{ $image->image }}" alt="{{ $image->image }}">
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {{-- side --}}
                 <div>
@@ -56,7 +71,7 @@
         <button wire:click="save()" class="btn primary">Save</button>
         <button wire:click="cancel()" class="btn">Cancel</button>
 
-    </x-gt-modal>
+    {{-- </x-gt-modal> --}}
 
     <div class="flex space-between va-c">
 

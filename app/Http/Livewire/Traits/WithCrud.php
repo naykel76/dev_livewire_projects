@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 trait WithCrud
 {
-
     use WithFileUploads;
 
     public function mountWithCrud()
@@ -39,14 +38,30 @@ trait WithCrud
     public function save()
     {
         $this->validate();
+
+        $this->checkIfPublished();
+
         $this->editing->save();
 
         if ($this->tmpImage) {
             $this->handleImage($this->tmpImage, $this->disk);
         }
 
-        $this->dispatchBrowserEvent('remove-images');
+        if ($this->tmpAdditionalImages) {
+            $this->handleAdditionalImages($this->tmpAdditionalImages, $this->disk);
+        }
+
+        $this->dispatchBrowserEvent('pondReset');
         $this->dispatchBrowserEvent('notify', 'Saved!');
+    }
+
+    protected function checkIfPublished(): void
+    {
+        if ($this->editing->status == 'draft') {
+            $this->editing->published_at = null;
+        } elseif ($this->editing->status == 'published' && $this->editing->published_at == null) {
+            $this->editing->published_at = now();
+        }
     }
 
     public function delete($id): void
@@ -74,6 +89,15 @@ trait WithCrud
                 Storage::disk($disk)->delete($previous);
             }
         });
+    }
+
+    public function handleAdditionalImages($files,  $disk = 'public'): void
+    {
+        foreach ($files as $file) {
+            $this->editing->additionalImages()->create([
+                'image' => $file->store('/', $disk)
+            ]);
+        }
     }
 
     /**

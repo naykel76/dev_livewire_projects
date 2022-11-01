@@ -20,6 +20,7 @@ class ProjectTable extends Component
     public array $paginateOptions = [10, 25, 50, 100];
     public bool $showModal;
     public $tmpImage;
+    public $tmpAdditionalImages = [];
 
     /**
      * Primary resource model class
@@ -60,19 +61,24 @@ class ProjectTable extends Component
             'editing.date_completed' => 'sometimes',
             'editing.published_at' => 'sometimes',
             'tmpImage' => 'nullable|image',
+            'tmpAdditionalImages.*' => 'nullable|image'
         ];
+    }
+
+    public function cancel(): void
+    {
+        $this->showModal = false;
     }
 
     public function render()
     {
         sleep(1);
-
         $query = self::$model::search($this->searchField, $this->search)
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
         return view('livewire.project-table')->with([
             'projects' => $query,
-        ]);
+        ])->layout('gotime::layouts.admin');
     }
 }

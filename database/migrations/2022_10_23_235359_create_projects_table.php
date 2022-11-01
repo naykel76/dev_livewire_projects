@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique()->nullable();
             $table->longText('description')->nullable();
-            $table->text('status')->nullable();
+            $table->text('status'); // needs value will spit the dummy!
             $table->string('image')->nullable();
             $table->integer('sort_order')->nullable()->default(0);
             $table->string('client')->nullable();

@@ -15,6 +15,9 @@ class Project extends Model
         'draft' => 'Draft'
     ];
 
+    protected $casts = [
+        'project_value' => \Naykel\Gotime\Casts\CurrencyCast::class,
+    ];
     /**
      * Model image url
      * @return mixed
@@ -26,7 +29,7 @@ class Project extends Model
             : url('/svg/placeholder.svg');
     }
 
-    public function tmpGallery()
+    public function additionalImages()
     {
         return $this->hasMany(AdditionalImage::class);
     }
